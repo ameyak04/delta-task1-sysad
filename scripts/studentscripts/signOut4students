@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "##################Script to request till Return Date###############"
+echo " ################ Script to Request Signout till Date  "
 
-echo -e "My Return Date after Signout is (in YYYYMMDD format Example 20230518) : \n"
+
+echo -e " My Retun Date after Signout is (In YYYYMMDD format  Example 20230519 ) : \n"
 
 read ReturnDate
 echo $ReturnDate
-
 RollNumber=$(sed -n '/^RollNumber/p' $HOME/userDetails.txt | awk -F: '{print $2}' )
-echo -e "$RollNumber  $ReturnDate" > ../../Return.txt
+echo -e " $RollNumber  $ReturnDate" > ../../Return.txt
