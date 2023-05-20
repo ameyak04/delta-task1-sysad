@@ -21,7 +21,7 @@ tar -xvf /tmp/sysAdtask1inputfiles.tar
 
 #######Following steps were followed to creat tar file with scripts on source Machine######
 #in home directory use :-
-tar -cvf /tmp/sysAdtask1scripts.tar ./scripts
+sudo tar -cvf /tmp/sysAdtask1scripts.tar ./scripts
 
 ################## For Extracting the file on Target Machine Follow following instructions ####
 
