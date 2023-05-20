@@ -19,9 +19,12 @@ echo $Permit2Signout
          StudentHome=$(grep $RollNumber /etc/passwd | awk -F: '{print $6}')
           echo -e "Student Home is : " $StudentHome
          File="$StudentHome/userDetails.txt"
+         HWFile="$HOME/ReturnAllow.txt"
           echo -e "File is : " $File
           sed -i '/Permit2Signout/d' $File
-           echo -e "Permit2Signouttill is :$ReturnDetails" >> $File
+          sed -i '/$RollNumber/d' $HWFile
+           echo -e "Permit2Signouttill is :"$ReturnDetails >> $File
+           echo -e "$RollNumber":"$ReturnDetails" >> $HWFile
 #         echo $?
  else
          StudentHome=$(grep $RollNumber /etc/passwd | awk -F: '{print $6}')
