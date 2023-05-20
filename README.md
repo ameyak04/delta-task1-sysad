@@ -1,1 +1,0 @@
-# delta-task1-sysad
