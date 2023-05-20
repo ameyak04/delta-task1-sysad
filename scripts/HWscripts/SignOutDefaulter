@@ -1,0 +1,27 @@
+#!/bin/bash
+rm $HOME/SignoutDefaulter.txt
+for student in $(cat $HOME/ReturnAllow.txt)
+do
+
+        RollNumber="$( echo -e  $student | awk -F: '{print $1}')"
+        SignoutDateAllowed="$(echo -e  $student | awk -F: '{print $2}')"
+        echo $SignoutDateAllowed
+        Name="$(grep $RollNumber /etc/passwd | awk -F: '{print $1}')"
+        Date="$(date +'%Y%m%d')"
+        if [ $Date -lt $SignoutDateAllowed ]
+        then
+                echo -e " This user $Name is still to return \n"
+        else
+        echo $Date
+        echo $Name
+        last $Name -s $SignoutDateAllowed"000000" | grep -i $Name
+        #last vaibhav -s $SignoutDateAllowed"000000" | grep -i vaibhav
+        if [ $? -eq 0 ]
+        then
+                echo -e " $Name returned to Hosted before $SignoutDateAllowed">>$HOME/SignoutDefaulter.txt
+        else
+                echo -e " $Name has not  returned to Hosted before $SignoutDateAllowed" >> $HOME/SignoutDefaulter.txt
+        fi
+        fi
+
+done
