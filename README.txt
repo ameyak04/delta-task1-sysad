@@ -72,12 +72,18 @@ Example is
 1)for running updateDefaulter GarnetB warden can use ---> ./home/GarnetB/updateDefaulter
 2)for running messallocation4HAD HAD will use ---> ./home/HAD/messallocation4HAD
 
+
+
+#################################################Super User Task########################################### 
+1) Student will request for Signout using Signout4Students script in the home directory of each student
+2)Hostel warden will approve or deny using Return4HW script in his home directory which will update decision in userdetails.txt in student home directory 
+3)Hostel Warden will run Signout4Defaulter to identify defaulter who do not return on time and update defaulters in SignoutDefaulter.txt in his home directory
+
+
 ####################to view/edit or basically access a file (nano <scriptpath>):-###########################
 1)for accessing userDetails.txt of Crista,  Crista,GarnetB Warden and HAD can use ----> nano /home/GarnetB/0/Crista/userDetails.txt
 2)for accessing mess.txt Crista can use nano /home/HAD/mess.txt
 
 to see present directory contents use :- ls( ls -al gives you more information)
- to see particular directory contents use ----> ls <path>( ls -al <path> gives you more information)
- 
- to see and concatenate contents of a file and print in standard output use ----> cat <path>
-
+to see particular directory contents use ----> ls <path>( ls -al <path> gives you more information)
+to see and concatenate contents of a file and print in standard output use ----> cat <path>
