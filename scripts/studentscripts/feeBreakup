@@ -1,0 +1,39 @@
+#!/bin/bash 
+
+echo " ################ Script to enter your Fee Payment Details " 
+
+FeePaid=0
+echo -e " Fee Paid in Rs is  ( Example 10000 ) : \n"
+
+read TmpFeePaid
+echo $TmpFeePaid>>$HOME/TmpFeePaid.txt
+for TotalFee in $( cat $HOME/TmpFeePaid.txt)
+do
+FeePaid=$(($FeePaid+$TotalFee))
+done
+#TuitionFee 50%
+#HostelRent 20%
+#ServiceCharge 10%
+#MessFee 20%
+
+TuitionFeePaid=$(echo "$FeePaid*0.5" |bc)
+HostelRent=$(echo "$FeePaid*0.2" |bc)
+ServiceCharge=$(echo "$FeePaid*0.1" |bc)
+MessFee=$(echo "$FeePaid*0.2" |bc)
+
+echo -e "Total FeePaid :"$FeePaid > $HOME/fees.txt
+echo -e "TuitionFeePaid :"$TuitionFeePaid >> $HOME/fees.txt
+echo -e "HostelRent :"$HostelRent >> $HOME/fees.txt
+echo -e "ServiceCharge :"$ServiceCharge >> $HOME/fees.txt
+echo -e "MessFee :"$MessFee >> $HOME/fees.txt
+echo -e " ========== All Transaction Completed so Far =====" >> $HOME/fees.txt
+cat $HOME/TmpFeePaid.txt >>$HOME/fees.txt
+
+echo -e "=======Summary of Fee Paid So Far ==============\n"
+
+cat $HOME/fees.txt
+
+#for TutionFee in $(grep TuitionFeePaid $HOME/fees.txt | awk -F: '{print $2}')
+#do 
+#	echo $TutionFee
+#done

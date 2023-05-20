@@ -1,0 +1,61 @@
+#!/bin/bash 
+awk '{print$1":"$2":"}' /home/HAD/mess.txt >/home/HAD/cleanmess.txt
+Mess1Details=$(sed -n '/^1:/p' /home/HAD/cleanmess.txt)
+	 sudo echo $Mess1Details
+	 Mess1CapAv="$(sudo echo -e  $Mess1Details | awk -F: '{print $2}')"
+	 sudo echo $Mess1CapAv > /home/HAD/Mess1counter
+Mess2Details=$(sed -n '/^2:/p' /home/HAD/cleanmess.txt)
+	 sudo echo $Mess2Details
+	 Mess2CapAv="$(sudo echo -e  $Mess2Details | awk -F: '{print $2}')"
+	 sudo echo $Mess2CapAv > /home/HAD/Mess2counter
+Mess3Details=$(sed -n '/^3:/p' /home/HAD/cleanmess.txt)
+	 sudo echo $Mess3Details
+	 Mess3CapAv="$(sudo echo -e  $Mess3Details | awk -F: '{print $2}')"
+	 sudo echo $Mess3CapAv > /home/HAD/Mess3counter
+for student in $(cat /home/HAD/cleanmess.txt)
+do
+
+	RollNumber="$(sudo echo -e  $student | awk -F: '{print $1}')"
+        MessPref="$(sudo echo -e  $student | awk -F: '{print $2}')"
+	WordCountRollNumber="$(sudo echo $RollNumber | wc -c)"
+
+ if [ $WordCountRollNumber -eq 10 ]
+ then
+	 sudo echo -e " Add Mess Pref to userdetails \n"
+	 sleep 2
+	 sudo echo -e " Valid $RollNumber \n"
+	 StudentHome=$(grep $RollNumber /etc/passwd | awk -F: '{print $6}')
+	 sudo echo -e "Student Home is : " $StudentHome
+	 sudo echo -e "Student MessPref is : " $MessPref
+	 MessPref1=$(sudo echo $MessPref| awk -F, '{print $1}')
+	 sudo echo -e " MessPref1 is : " $MessPref1
+	 MessPref2=$(sudo echo $MessPref| awk -F, '{print $2}')
+	 MessPref3=$(sudo echo $MessPref| awk -F, '{print $3}')
+	 # Choose Preference 
+	AvailableCapacity1="$(cat /home/HAD/"Mess"$MessPref1"counter")"
+	AvailableCapacity2="$(cat /home/HAD/"Mess"$MessPref1"counter")"
+	AvailableCapacity3="$(cat /home/HAD/"Mess"$MessPref1"counter")"
+	 if  [ $AvailableCapacity1 -ne 0 ]
+	 then
+		 MessFinalPref=$MessPref1
+		 sudo echo -e " Final Mess Pref is :" $MessFinalPref
+	 elif [ $AvailableCapacity2 -ne 0 ]
+	 then
+		 MessFinalPref=$MessPref2
+		 sudo echo -e " Final Mess Pref is :" $MessFinalPref
+	 else 
+		MessFinalPref=$MessPref3
+		sudo echo -e " Final Mess Pref is :" $MessFinalPref
+	 fi 
+	 AvailableCapacity="$(cat /home/HAD/"Mess"$MessFinalPref"counter")"
+	 File="$StudentHome/userDetails.txt"
+	 sudo echo -e "File is : " $File
+	 sudo sed -i '/Mess/d' $File
+	 sudo echo $?
+	 sudo  echo -e "Mess is :"$MessFinalPref >> $File
+	 sudo  echo -e "$AvailableCapacity-1" | bc > /home/HAD/"Mess"$MessFinalPref"counter"
+#	 sudo echo $?
+ else
+	 sudo echo -e " invalide RollNumber $RollNumber \n"
+ fi
+done

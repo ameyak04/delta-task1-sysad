@@ -1,0 +1,19 @@
+#!/bin/bash 
+
+echo " ################ Script to enter your Mess preferances " 
+
+
+echo -e " My Mess Preference is ( Example 2,1,3 ) : \n"
+
+read MessPref
+echo $MessPref
+RollNumber=$(sed -n '/^RollNumber/p' $HOME/userDetails.txt | awk -F: '{print $2}' )
+echo $RollNumber
+grep $RollNumber /home/HAD/mess.txt
+if [ $? -eq 0 ]
+then
+	echo -e " your preference is already in the mess.txt" 
+	exit
+else
+echo -e "$RollNumber  $MessPref" >> /home/HAD/mess.txt
+fi

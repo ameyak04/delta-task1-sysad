@@ -1,0 +1,35 @@
+#!/bin/bash
+awk '{print$1":"$2":"}' $HOME/Return.txt >$HOME/cleanReturn.txt
+ReturnDetails=$(sed -n '/^1:/p' $HOME/cleanReturn.txt)
+          echo $ReturnDetails
+for student in $(cat $HOME/cleanReturn.txt)
+do
+
+        RollNumber="$( echo -e  $student | awk -F: '{print $1}')"
+        ReturnDetails="$( echo -e  $student | awk -F: '{print $2}')"
+echo -e " $RollNumber is asking permission to Signout till $ReturnDetails \n"
+echo -e " Do You Permit : ( Type Y/N )  \n"
+read Permit2Signout
+echo $Permit2Signout
+
+ if [[ $Permit2Signout == "Y" ]]
+ then
+          echo -e " Add Return Signout Date to user details \n"
+         sleep 2
+         StudentHome=$(grep $RollNumber /etc/passwd | awk -F: '{print $6}')
+          echo -e "Student Home is : " $StudentHome
+         File="$StudentHome/userDetails.txt"
+          echo -e "File is : " $File
+          sed -i '/Permit2Signout/d' $File
+           echo -e "Permit2Signouttill is :$ReturnDetails" >> $File
+#         echo $?
+ else
+         StudentHome=$(grep $RollNumber /etc/passwd | awk -F: '{print $6}')
+          echo -e "Student Home is : " $StudentHome
+         File="$StudentHome/userDetails.txt"
+          echo -e "File is : " $File
+          sed -i '/Permit2Signout/d' $File
+          echo $?
+           echo -e "Permit2Signout is : Declined for $ReturnDetails" >> $File
+ fi
+done

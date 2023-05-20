@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo -e " ============ Script to Identify Defaulters ===== " 
+rm $HOME/feeDefaulters.txt
+rm $HOME/announcements.txt
+for StudentFees in $(ls $HOME/*/*/fees.txt)
+do
+	grep "Total FeePaid :" $StudentFees
+	if [ $? -ne 0 ]
+	then
+		StudentName=$(echo $StudentFees|awk -F"/" '{print $5}')
+		echo -e " Fees Not Paid for :"$StudentName
+		RollNumber="$(sed -n '/^RollNumber/p' $HOME/*/$StudentName/userDetails.txt | awk -F: '{print $2}')" 
+		echo -e "$StudentName":"$RollNumber" >> $HOME/feeDefaulters.txt
+	else
+		StudentName=$(echo $StudentFees|awk -F"/" '{print $5}')
+		echo -e " $StudentName Fees are paid \n"
+		touch $HOME/announcements.txt
+		LineCount=$(wc -l $HOME/announcements.txt| awk '{print $1}')
+		echo $LineCount
+		if [ $LineCount -lt 5 ]
+		then
+		echo -e "$StudentName":"$RollNumber" >> $HOME/announcements.txt
+		fi
+	fi
+done
