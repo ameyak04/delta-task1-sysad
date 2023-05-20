@@ -1,6 +1,6 @@
 #####Following steps were followed to creat tar file with inputfiles on source Machine######
 #in home directory use :-
-tar -cvf /tmp/sysAdtask1inputfiles.tar ./inputfiles
+sudo tar -cvf /tmp/sysAdtask1inputfiles.tar ./inputfiles
 
 
 ################## For Extracting the file on Target Machine Follow following instructions ####
