@@ -1,6 +1,5 @@
 #!/bin/bash
-echo -e "Enter your IP address : \n"
-read your_server_IP
+your_server_IP = $(cat /root/inputfiles/ipaddr.txt)
 
 mkdir -p /var/www/html/gamma-z.hm
 chown -R $USER:$USER /var/www/html/gamma-z.hm
