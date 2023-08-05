@@ -15,7 +15,7 @@ do
         echo $Date
         echo $Name
         last $Name -s $SignoutDateAllowed"000000" | grep -i $Name
-        #last vaibhav -s $SignoutDateAllowed"000000" | grep -i vaibhav
+        #last Ameya -s $SignoutDateAllowed"000000" | grep -i Ameya
         if [ $? -eq 0 ]
         then
                 echo -e " $Name returned to Hosted before $SignoutDateAllowed">>$HOME/SignoutDefaulter.txt
